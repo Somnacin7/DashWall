@@ -33,6 +33,9 @@ namespace DashWall
 
         private GpioController gpio;
 
+        private Brush red = new SolidColorBrush(Windows.UI.Colors.Red);
+        private Brush white = new SolidColorBrush(Windows.UI.Colors.White);
+
         public MainPage()
         {
             InitializeComponent();
@@ -132,7 +135,20 @@ namespace DashWall
                 isReading = false;
                 bitCount = 0;
 
-                Time.Text = DateTime.Now.ToString("h:mm tt");
+                
+                if (curWater > 15)
+                {
+                    Time.Text = "FLOOD WARNING";
+                    Time.FontSize = 150;
+                    Time.Foreground = red;
+                }
+                else
+                {
+                    Time.Text = DateTime.Now.ToString("h:mm tt");
+                    Time.FontSize = 250;
+                    Time.Foreground = white;
+                }
+
                 Temp.Text = "" + (int)((255.0 - curTemp) * .166 + 60.0) + "°";
 
                 Fade.Opacity = .4 - (255.0 - curPhoto) / 255.0;
